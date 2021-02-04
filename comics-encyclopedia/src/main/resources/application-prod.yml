@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      repositories:
+        enabled: true
+      uri: ${MONGO_DB_CONNECTION}
+
+app-config:
+  api:
+    access_token: ${ACCESS_TOKEN}
+    base_url: https://superheroapi.com/api/${app-config.api.access_token}/
