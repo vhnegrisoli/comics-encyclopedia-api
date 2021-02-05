@@ -1,7 +1,11 @@
 import express from "express";
 
+import * as db from "./src/config/db/mongoDbConfig";
+
 const app = express();
 const env = process.env;
+
+db.connect();
 
 app.get("/", (req, res) => {
   return res.json({
