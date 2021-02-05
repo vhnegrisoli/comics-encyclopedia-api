@@ -1,0 +1,17 @@
+{
+  "name": "comics-processor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.15",
+    "nodemon": "^2.0.7",
+    "sucrase": "^3.17.1"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  }
+}

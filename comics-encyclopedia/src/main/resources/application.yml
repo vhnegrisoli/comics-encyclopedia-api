@@ -17,3 +17,15 @@ app-config:
 
     comics_processing:
       base_url: http://localhost:8081/api/comics/
+
+kafka:
+
+  bootstrap-server: localhost:9092
+
+  topic:
+    comics-request: comics_request.topic
+    comics-response: comics_response.topic
+
+  consumer:
+    group-id: comics_encyclopedia_group
+    auto-offset-reset: earliest

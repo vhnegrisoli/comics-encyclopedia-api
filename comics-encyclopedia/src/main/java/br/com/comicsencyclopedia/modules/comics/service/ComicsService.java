@@ -34,18 +34,22 @@ public class ComicsService {
     private ComicsProcessorApiPublisher publisher;
 
     public List<Comics> findByName(String name) {
-        var comicsProcessorApi = comicsProcessorApiService.findComcisByName(name);
-        if (isEmpty(comicsProcessorApi)) {
-            var superHeroApiComics = processComicResultList(name);
-            if (!isEmpty(superHeroApiComics)) {
-                publisher.publishMessage(superHeroApiComics);
-            }
-            return superHeroApiComics;
+        var comics = repository.findByNameLikeIgnoreCase(name);
+        if (!isEmpty(comics)) {
+            return comics;
         }
-        return comicsProcessorApi;
+        var comicsProcessorApi = comicsProcessorApiService.findComcisByName(name);
+        if (!isEmpty(comicsProcessorApi)) {
+            return comicsProcessorApi;
+        }
+        var superHeroApiComics = getComicsFromSuperHeroApi(name);
+        if (!isEmpty(superHeroApiComics)) {
+            publisher.publishMessage(superHeroApiComics);
+        }
+        return superHeroApiComics;
     }
 
-    private List<Comics> processComicResultList(String name) {
+    private List<Comics> getComicsFromSuperHeroApi(String name) {
         return superHeroApiService
             .findComcisByName(name)
             .map(ComicsResponse::getResults)
