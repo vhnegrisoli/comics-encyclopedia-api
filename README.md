@@ -1,5 +1,7 @@
 # Comics Encyclopedia API
 
+![Logo](https://github.com/vhnegrisoli/comics-encyclopedia-api/blob/main/API%20Logo.png)
+
 Comics Encyclopedia API is a REST API project using microservices architecture to create a comic book encyclopedia based on Super Hero API.
 
 ## Objectives
