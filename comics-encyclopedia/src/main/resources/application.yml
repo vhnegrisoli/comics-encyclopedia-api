@@ -10,22 +10,19 @@ spring:
 
 app-config:
   services:
-
     super_hero_api:
       access_token: 2560039007408985
       base_url: https://superheroapi.com/api/${app-config.api.access_token}/
-
     comics_processing:
       base_url: http://localhost:8081/api/comics/
 
 kafka:
-
   bootstrap-server: localhost:9092
-
   topic:
-    comics-request: comics_request.topic
-    comics-response: comics_response.topic
-
+    dc-comics-request: dc_comics_request.topic
+    dc-comics-response: dc_comics_response.topic
+    marvel-comics-request: marvel_comics_request.topic
+    marvel-comics-response: marvel_comics_response.topic
   consumer:
     group-id: comics_encyclopedia_group
     auto-offset-reset: earliest

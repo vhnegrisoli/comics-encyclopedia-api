@@ -1,11 +1,13 @@
 import express from "express";
 
 import * as db from "./src/config/db/mongoDbConfig";
+import * as kafka from "./src/config/kafka/kafkaConfig";
 
 const app = express();
 const env = process.env;
 
 db.connect();
+kafka.connect();
 
 app.get("/", (req, res) => {
   return res.json({

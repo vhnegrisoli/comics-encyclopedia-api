@@ -34,7 +34,8 @@ public class ComicsService {
     private ComicsProcessorApiPublisher publisher;
 
     public List<Comics> findByName(String name) {
-        var comics = repository.findByNameLikeIgnoreCase(name);
+        name = name.toLowerCase();
+        var comics = repository.findByNameLowerLike(name);
         if (!isEmpty(comics)) {
             return comics;
         }

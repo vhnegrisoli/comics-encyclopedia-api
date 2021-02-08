@@ -17,8 +17,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Builder
 @NoArgsConstructor
-@Document(collection = "comics")
-public class Comics {
+@Document(collection = "dc_comics_temporary")
+public class DcComics {
 
     @Id
     private String id;
@@ -43,8 +43,8 @@ public class Comics {
 
     private Image image;
 
-    public static Comics convertFrom(ComicsResult comicsResult) {
-        return Comics
+    public static DcComics convertFrom(ComicsResult comicsResult) {
+        return DcComics
             .builder()
             .id(null)
             .characterId(comicsResult.getId())
