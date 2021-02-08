@@ -20,7 +20,6 @@ For the two APIs, I'll use Java 11 with Spring Boot for the main API, which is t
 * Apache Kafka
 * Spring Data MongoDB
 * Spring Data OpenFeign
-* Axios
 * Mongoose
 
 ## Architecture
@@ -32,10 +31,6 @@ For the two APIs, I'll use Java 11 with Spring Boot for the main API, which is t
 
 * Docker
 * Docker-compose
-
-## CI/CD for deploying
-
-* Heroku
 
 ## Architecture design
 
