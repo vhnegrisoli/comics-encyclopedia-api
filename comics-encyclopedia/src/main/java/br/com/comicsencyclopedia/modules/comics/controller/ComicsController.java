@@ -26,9 +26,4 @@ public class ComicsController {
     public Comics findById(@PathVariable String id) {
         return service.findById(id);
     }
-
-    @GetMapping("teste/{id}")
-    public String teste(@PathVariable String id) {
-        return service.teste(id);
-    }
 }

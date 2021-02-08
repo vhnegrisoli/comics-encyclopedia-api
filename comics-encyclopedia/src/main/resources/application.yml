@@ -4,17 +4,21 @@ server:
 spring:
   data:
     mongodb:
-      replositories:
+      repositories:
         enabled: true
       uri: mongodb://localhost:27017/comics-encyclopedia-requests
 
 app-config:
+
   services:
     super_hero_api:
-      access_token: 2560039007408985
-      base_url: https://superheroapi.com/api/${app-config.api.access_token}/
-    comics_processing:
+      access_token: ${SUPER_HERO_API_ACCESS_TOKEN}
+      base_url: https://superheroapi.com/api/${app-config.super_hero_api.access_token}/
+    comics_processor:
       base_url: http://localhost:8081/api/comics/
+
+  schedulers:
+    delete-data-every-hour: 0 0 */1 * * *
 
 kafka:
   bootstrap-server: localhost:9092

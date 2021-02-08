@@ -3,11 +3,9 @@ package br.com.comicsencyclopedia.modules.comics.service;
 import br.com.comicsencyclopedia.config.exception.ValidacaoException;
 import br.com.comicsencyclopedia.modules.comics.model.Comics;
 import br.com.comicsencyclopedia.modules.comics.repository.ComicsRepository;
-import br.com.comicsencyclopedia.modules.comics.util.JsonUtil;
 import br.com.comicsencyclopedia.modules.processorapi.publisher.ComicsProcessorApiPublisher;
 import br.com.comicsencyclopedia.modules.processorapi.service.ComicsProcessorApiService;
 import br.com.comicsencyclopedia.modules.superheroapi.dto.response.ComicsResponse;
-import br.com.comicsencyclopedia.modules.superheroapi.dto.response.ComicsResult;
 import br.com.comicsencyclopedia.modules.superheroapi.service.SuperHeroApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,13 +62,17 @@ public class ComicsService {
         var existingComics = repository.findByCharacterId(id);
         return existingComics.orElseGet(() -> {
             var response = superHeroApiService.findComcisById(String.valueOf(id));
-            var comics = Comics.convertFrom(response.get());
+            var comics = Comics.convertFrom(response
+                .orElseThrow(() -> new ValidacaoException("Item not found by ID ".concat(id))));
+            publisher.publishMessage(comics);
             return repository.save(comics);
         });
     }
 
-    public String teste(String id) {
-        var existingComics = repository.findByCharacterId(id);
-        return JsonUtil.toJson(existingComics.get());
+    public void deleteDataIfExists() {
+        var existingComics = repository.findAll();
+        if (!isEmpty(existingComics)) {
+            repository.deleteAll();
+        }
     }
 }

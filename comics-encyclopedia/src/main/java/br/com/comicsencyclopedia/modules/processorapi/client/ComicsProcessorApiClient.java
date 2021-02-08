@@ -9,7 +9,7 @@ import java.util.List;
 
 @FeignClient(
     name = "comicsProcessorApiClient",
-    url = "${app-config.services.comics_processing.base_url}"
+    url = "${app-config.services.comics_processor.base_url}"
 )
 public interface ComicsProcessorApiClient {
 
