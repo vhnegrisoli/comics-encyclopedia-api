@@ -71,8 +71,8 @@ We'll have 4 topics:
 
 ## Creating topics manually
 
-All of the topics are automatically created after any of the microservices starts. But, if you want to create the
-topics manually, use those commands: 
+All of the topics are automatically created after any of the microservices starts. 
+But, if you want to create the topics manually, use those commands: 
 
 DC Comics Request:
 
@@ -89,6 +89,16 @@ Marvel Comics Request:
 Marvel Comics Response:
 
 `docker-compose exec kafka kafka-topics --create --topic marvel_comics_response.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181`
+
+And if you don't want to use CLI, by accessing Kafdrop you can also create or delete topics.
+
+## Monitor your Kafka with Kafdrop
+
+By accessing http://localhost:19000, you'll be able to monitor your Apache Kafka with Kafdrop. 
+
+![Kafdrop](https://github.com/vhnegrisoli/comics-encyclopedia-api/blob/main/Kafdrop%20Monitor.png)
+
+It'll be possible to monitor your topics, your Kafka specs, and the messages in each topic.
 
 ## Author
 
