@@ -11,9 +11,7 @@ export async function consumeMessages() {
       eachMessage: async ({ topic, partition, message }) => {
         console.log(topic);
         console.log(partition);
-        console.log({
-          value: message.value.toString(),
-        });
+        processMessage(message.value.toString());
       },
     });
   } catch (error) {
@@ -24,9 +22,10 @@ export async function consumeMessages() {
 }
 
 function getConsumer() {
-  return kafkaConfig
-    .getKafkaConnection()
-    .consumer({ groupId: secrets.KAFKA_GROUP_ID });
+  return kafkaConfig.getKafkaConnection().consumer({
+    groupId: secrets.KAFKA_GROUP_ID,
+    allowAutoTopicCreation: true,
+  });
 }
 
 async function subscribeTopics(consumer) {

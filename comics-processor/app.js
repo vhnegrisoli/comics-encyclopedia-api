@@ -12,12 +12,18 @@ kafka.connect();
 consumer.consumeMessages();
 
 app.get("/send", async (req, res) => {
-  const producer = kafka.getKafkaConnection().producer();
-
+  const producer = kafka
+    .getKafkaConnection()
+    .producer({ allowAutoTopicCreation: true });
+  let jsonMessage = {
+    id: "Test",
+    name: "Test",
+    value: 156.88,
+  };
   await producer.connect();
   await producer.send({
     topic: "dc_comics_request.topic",
-    messages: [{ value: "Hello KafkaJS user!" }],
+    messages: [{ value: JSON.stringify(jsonMessage) }],
   });
   await producer.disconnect();
 
