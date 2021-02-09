@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 const model = mongoose.model;
 
-const MarvelComicsSchema = new Schema({
+const ComicsSchema = new Schema({
   characterId: String,
   publisherId: String,
   name: String,
@@ -16,4 +16,4 @@ const MarvelComicsSchema = new Schema({
   image: Object,
 });
 
-module.exports = model("MarvelComics", MarvelComicsSchema);
+module.exports = model("Comics", ComicsSchema);

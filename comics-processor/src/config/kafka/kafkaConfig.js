@@ -15,3 +15,7 @@ export function connect() {
     console.log(error);
   }
 }
+
+export function getKafkaConnection() {
+  return kafka;
+}
