@@ -6,12 +6,14 @@ import br.com.comicsencyclopedia.modules.comics.repository.ComicsRepository;
 import br.com.comicsencyclopedia.modules.processorapi.publisher.ComicsProcessorApiPublisher;
 import br.com.comicsencyclopedia.modules.processorapi.service.ComicsProcessorApiService;
 import br.com.comicsencyclopedia.modules.superheroapi.dto.response.ComicsResponse;
+import br.com.comicsencyclopedia.modules.superheroapi.dto.response.ComicsResult;
 import br.com.comicsencyclopedia.modules.superheroapi.service.SuperHeroApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
@@ -43,7 +45,7 @@ public class ComicsService {
         }
         var superHeroApiComics = getComicsFromSuperHeroApi(name);
         if (!isEmpty(superHeroApiComics)) {
-            publisher.publishMessage(superHeroApiComics);
+            superHeroApiComics.forEach(character -> publisher.publishMessage(character));
         }
         return superHeroApiComics;
     }
@@ -61,12 +63,21 @@ public class ComicsService {
     public Comics findById(String id) {
         var existingComics = repository.findByCharacterId(id);
         return existingComics.orElseGet(() -> {
-            var response = superHeroApiService.findComcisById(String.valueOf(id));
-            var comics = Comics.convertFrom(response
-                .orElseThrow(() -> new ValidacaoException("Item not found by ID ".concat(id))));
+            var response = superHeroApiService.findComcisById(id);
+            var comicsResult = response
+                .orElseThrow(() -> new ValidacaoException("Item not found by ID ".concat(id)));
+            validateExistingData(comicsResult);
+            var comics = Comics.convertFrom(comicsResult);
             publisher.publishMessage(comics);
             return repository.save(comics);
         });
+    }
+
+    private void validateExistingData(ComicsResult comicsResult) {
+        if (isEmpty(comicsResult.getId())
+            || isEmpty(comicsResult.getName())) {
+            throw new ValidacaoException("Item has no data to show.");
+        }
     }
 
     public void deleteDataIfExists() {

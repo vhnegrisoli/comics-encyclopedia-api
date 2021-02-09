@@ -8,6 +8,7 @@ import br.com.comicsencyclopedia.modules.superheroapi.dto.response.ComicsResult;
 import br.com.comicsencyclopedia.modules.superheroapi.dto.response.Image;
 import br.com.comicsencyclopedia.modules.superheroapi.dto.response.PowerStats;
 import br.com.comicsencyclopedia.modules.superheroapi.dto.response.Work;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "comics_temp")
 public class Comics {
 
@@ -55,6 +57,7 @@ public class Comics {
             .appearance(CharacterAppearance.convertFrom(comicsResult.getAppearance()))
             .work(comicsResult.getWork())
             .connections(CharacterConnections.convertFrom(comicsResult.getConnections()))
+            .image(comicsResult.getImage())
             .build();
     }
 }
