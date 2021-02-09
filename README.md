@@ -21,6 +21,7 @@ For the two APIs, I'll use Java 11 with Spring Boot for the main API, which is t
 * Spring Data MongoDB
 * Spring Data OpenFeign
 * Mongoose
+* Kafdrop
 
 ## Architecture
 
@@ -37,6 +38,57 @@ For the two APIs, I'll use Java 11 with Spring Boot for the main API, which is t
 This diagram represents how the components works in the system, and the execution flow. 
 
 ![Architecture design](https://github.com/vhnegrisoli/comics-encyclopedia-api/blob/main/Comics%20Encyclopedia%20Architecture.png)
+
+## Run application
+
+As we use a docker-compose file, to run everything you just have to type:
+
+`docker-compose up --build`
+
+In yout terminal at the same directory as the docker-compose file exists.
+
+And if you doesn't want to see the logs of each container during initialization, just add the `-d` flag at the end of the command. Ex: `docker-compose up --build -d`
+
+## Access applications
+
+After running the docker-compose file, there will be 6 docker containers, and it will be possible to access at:
+
+* zookeper                ->  http://localhost:2181
+* kafka                   ->  http://localhost:9092
+* mongodb                 ->  http://localhost:27017
+* kafdrop                 ->  http://localhost:19000
+* comics-encyclopedia-api ->  http://localhost:8080
+* comics-processor-api    ->  http://localhost:8081
+
+## Kafka Topics
+
+We'll have 4 topics:
+
+* **dc_comics_request.topic** (for DC Comics data processing)
+* **dc_comics_response.topic** (for DC Comics data response to Comics Encyclopedia API)
+* **marvel_comics_request.topic** (for Marvel Comics data processing)
+* **marvel_comics_response.topic** (for Marvel Comics data response to Comics Encyclopedia API)
+
+## Creating topics manually
+
+All of the topics are automatically created after any of the microservices starts. But, if you want to create the
+topics manually, use those commands: 
+
+DC Comics Request:
+
+`docker-compose exec kafka kafka-topics --create --topic dc_comics_request.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181`
+
+DC Comics Response:
+
+`docker-compose exec kafka kafka-topics --create --topic dc_comics_response.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181`
+
+Marvel Comics Request: 
+
+`docker-compose exec kafka kafka-topics --create --topic marvel_comics_request.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181`
+
+Marvel Comics Response:
+
+`docker-compose exec kafka kafka-topics --create --topic marvel_comics_response.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181`
 
 ## Author
 
