@@ -39,10 +39,25 @@ services:
     environment:
       KAFKA_BROKERCONNECT: kafka:29092
 
+  comics-encyclopedia-db:
+    image: tutum/mongodb
+    container_name: comics-encyclopedia
+    restart: always
+    networks:
+      - broker-kafka
+    environment:
+      - AUTH=no
+    ports:
+      - '27017:27017'
+      - '28017:28017'
+
 networks: 
   broker-kafka:
     driver: bridge
 
 # Criar tópicos
 
-# docker-compose exec kafka kafka-topics --create --topic comics.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
+# docker-compose exec kafka kafka-topics --create --topic dc_comics_request.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
+# docker-compose exec kafka kafka-topics --create --topic dc_comics_response.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
+# docker-compose exec kafka kafka-topics --create --topic marvel_comics_request.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
+# docker-compose exec kafka kafka-topics --create --topic marvel_comics_response.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
