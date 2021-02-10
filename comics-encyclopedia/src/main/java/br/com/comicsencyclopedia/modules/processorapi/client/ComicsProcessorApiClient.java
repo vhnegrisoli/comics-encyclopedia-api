@@ -16,6 +16,6 @@ public interface ComicsProcessorApiClient {
     @GetMapping("name/{name}")
     List<Comics> findComcisByName(@PathVariable String name);
 
-    @GetMapping("{id}")
-    Comics findComcisById(@PathVariable String id);
+    @GetMapping("characterId/{characterId}")
+    Comics findComcisById(@PathVariable String characterId);
 }

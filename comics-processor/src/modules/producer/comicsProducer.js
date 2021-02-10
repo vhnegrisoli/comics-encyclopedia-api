@@ -31,7 +31,9 @@ class ComicsProducer {
   defineTopic(comics) {
     return comics.publisherID && comics.publisherID === "DC"
       ? topics.DC_COMICS_RESPONSE_TOPIC
-      : topics.MARVEL_COMICS_RESPONSE_TOPIC;
+      : comics.publisherID === "MARVEL"
+      ? topics.MARVEL_COMICS_RESPONSE_TOPIC
+      : topics.NOT_INFORMED_PUBLISHER__RESPONSE_TOPIC;
   }
 }
 export default new ComicsProducer();

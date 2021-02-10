@@ -1,6 +1,5 @@
 package br.com.comicsencyclopedia.modules.comics.model;
 
-import br.com.comicsencyclopedia.config.exception.ValidacaoException;
 import br.com.comicsencyclopedia.modules.comics.enums.PublisherID;
 import br.com.comicsencyclopedia.modules.processorapi.dto.ComicsProcessorResponse;
 import br.com.comicsencyclopedia.modules.superheroapi.dto.comics.CharacterAppearance;
@@ -19,6 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Arrays;
 
+import static br.com.comicsencyclopedia.modules.comics.enums.PublisherID.NOT_INFORMED;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Data
@@ -92,6 +92,6 @@ public class Comics {
             .filter(publisher -> !isEmpty(publisherName)
                 && publisher.getPublisherName().equals(publisherName))
             .findFirst()
-            .orElseThrow(() -> new ValidacaoException("The character has no publisher."));
+            .orElse(NOT_INFORMED);
     }
 }

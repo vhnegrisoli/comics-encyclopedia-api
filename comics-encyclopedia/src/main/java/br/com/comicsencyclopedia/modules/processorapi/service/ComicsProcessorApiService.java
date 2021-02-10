@@ -19,7 +19,9 @@ public class ComicsProcessorApiService {
 
     public List<Comics> findComcisByName(String name) {
         try {
-            return client.findComcisByName(name);
+            var comics = client.findComcisByName(name);
+            log.info("Successfully fetched data at Comics Processor API.");
+            return comics;
         } catch (Exception ex) {
             log.info("Error while trying to consult Comic Hero API by name: {}", ex.getMessage());
             return Collections.emptyList();
@@ -28,7 +30,9 @@ public class ComicsProcessorApiService {
 
     public Optional<Comics> findComcisById(String id) {
         try {
-            return Optional.of(client.findComcisById(id));
+            var comics = Optional.of(client.findComcisById(id));
+            log.info("Successfully fetched data at Comics Processor API.");
+            return comics;
         } catch (Exception ex) {
             log.info("Error while trying to consult Comic Hero API by ID: {}", ex.getMessage());
             return Optional.empty();

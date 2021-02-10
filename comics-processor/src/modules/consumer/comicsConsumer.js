@@ -36,6 +36,10 @@ async function subscribeTopics(consumer) {
     topic: topics.MARVEL_COMICS_REQUEST_TOPIC,
     fromBeginning: true,
   });
+  await consumer.subscribe({
+    topic: topics.NOT_INFORMED_PUBLISHER_REQUEST_TOPIC,
+    fromBeginning: true,
+  });
 }
 
 async function processMessage(message) {

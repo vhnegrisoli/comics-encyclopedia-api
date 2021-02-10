@@ -7,7 +7,8 @@ import lombok.Getter;
 public enum PublisherID {
 
     DC("DC Comics"),
-    MARVEL("Marvel Comics");
+    MARVEL("Marvel Comics"),
+    NOT_INFORMED("Not Informed");
 
     @Getter
     private final String publisherName;

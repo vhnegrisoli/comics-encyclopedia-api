@@ -29,6 +29,8 @@ function createTopics(config) {
       { topic: topics.DC_COMICS_RESPONSE_TOPIC },
       { topic: topics.MARVEL_COMICS_REQUEST_TOPIC },
       { topic: topics.MARVEL_COMICS_RESPONSE_TOPIC },
+      { topic: topics.NOT_INFORMED_PUBLISHER_REQUEST_TOPIC },
+      { topic: topics.NOT_INFORMED_PUBLISHER__RESPONSE_TOPIC },
     ],
   });
   admin.disconnect();

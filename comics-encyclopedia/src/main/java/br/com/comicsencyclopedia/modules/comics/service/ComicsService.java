@@ -62,16 +62,25 @@ public class ComicsService {
     }
 
     public Comics findById(String id) {
-        var existingComics = repository.findByCharacterId(id);
-        return existingComics.orElseGet(() -> {
-            var response = superHeroApiService.findComcisById(id);
-            var comicsResult = response
-                .orElseThrow(() -> new ValidacaoException("Item not found by ID ".concat(id)));
-            validateExistingData(comicsResult);
-            var comics = Comics.convertFrom(comicsResult);
-            publisher.publishMessage(comics, comics.getPublisherId());
-            return comics;
-        });
+        return repository
+            .findByCharacterId(id)
+            .orElseGet(() -> findComicsByIdInProcessorApi(id));
+    }
+
+    private Comics findComicsByIdInProcessorApi(String id) {
+        return comicsProcessorApiService
+            .findComcisById(id)
+            .orElseGet(() -> findComicsByIdInSuperHeroApi(id));
+    }
+
+    private Comics findComicsByIdInSuperHeroApi(String id) {
+        var response = superHeroApiService.findComcisById(id);
+        var comicsResult = response
+            .orElseThrow(() -> new ValidacaoException("Item not found by ID ".concat(id)));
+        validateExistingData(comicsResult);
+        var comics = Comics.convertFrom(comicsResult);
+        publisher.publishMessage(comics, comics.getPublisherId());
+        return comics;
     }
 
     private void validateExistingData(ComicsResult comicsResult) {

@@ -27,6 +27,8 @@ kafka:
     dc-comics-response: dc_comics_response.topic
     marvel-comics-request: marvel_comics_request.topic
     marvel-comics-response: marvel_comics_response.topic
+    not-informed-publisher-request: not_informed_publisher_request.topic
+    not-informed-publisher-response: not_informed_publisher_response.topic
   consumer:
     group-id: comics_encyclopedia_group
     auto-offset-reset: earliest
