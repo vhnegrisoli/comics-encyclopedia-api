@@ -45,5 +45,5 @@ app.get("/", (req, res) => {
 const PORT = env.PORT || 8081;
 
 app.listen(PORT, () => {
-  console.log(`Application is active and running in port ${PORT}`);
+  console.info(`Application is active and running in port ${PORT}`);
 });

@@ -1,6 +1,7 @@
 import * as kafkaConfig from "../../config/kafka/kafkaConfig";
 import * as secrets from "../../config/secrets/secrets";
 import * as topics from "../../config/kafka/topics";
+import ComicsService from "../comics/service/comicsService";
 
 export async function consumeMessages() {
   try {
@@ -9,13 +10,11 @@ export async function consumeMessages() {
     await consumer.connect();
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
-        console.log(topic);
-        console.log(partition);
         processMessage(message.value.toString());
       },
     });
   } catch (error) {
-    console.log(
+    console.error(
       `Error while trying to connect to Kafka for consuming messages. Error: ${error.message}`
     );
   }
@@ -39,14 +38,12 @@ async function subscribeTopics(consumer) {
   });
 }
 
-function processMessage(message) {
-  console.log(message);
+async function processMessage(message) {
+  console.info(`Recieved message from Kafka: ${message}`);
   try {
-    let jsonMessage = JSON.parse(message);
-    console.log(jsonMessage);
+    await ComicsService.processComics(message);
   } catch (error) {
-    console.log(
-      `Error while trying to parse message: ${message} - Error: ${error.message}`
-    );
+    console.error(`Error while trying to parse message: ${error.message}`);
+    console.error(error);
   }
 }

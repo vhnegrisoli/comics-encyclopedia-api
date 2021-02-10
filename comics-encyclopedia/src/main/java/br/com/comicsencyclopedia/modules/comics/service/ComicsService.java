@@ -45,7 +45,8 @@ public class ComicsService {
         }
         var superHeroApiComics = getComicsFromSuperHeroApi(name);
         if (!isEmpty(superHeroApiComics)) {
-            superHeroApiComics.forEach(character -> publisher.publishMessage(character));
+            superHeroApiComics.forEach(character -> publisher
+                .publishMessage(character, character.getPublisherId()));
         }
         return superHeroApiComics;
     }
@@ -68,8 +69,8 @@ public class ComicsService {
                 .orElseThrow(() -> new ValidacaoException("Item not found by ID ".concat(id)));
             validateExistingData(comicsResult);
             var comics = Comics.convertFrom(comicsResult);
-            publisher.publishMessage(comics);
-            return repository.save(comics);
+            publisher.publishMessage(comics, comics.getPublisherId());
+            return comics;
         });
     }
 
@@ -85,5 +86,9 @@ public class ComicsService {
         if (!isEmpty(existingComics)) {
             repository.deleteAll();
         }
+    }
+
+    public void saveComics(Comics comics) {
+        repository.save(comics);
     }
 }

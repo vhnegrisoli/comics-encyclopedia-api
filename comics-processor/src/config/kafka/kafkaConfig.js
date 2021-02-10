@@ -13,15 +13,16 @@ export function connect() {
     createTopics(config);
     kafka = config;
   } catch (error) {
-    console.log("Error while trying to connect to Apache Kafka.");
-    console.log(error);
+    console.info(
+      `Error while trying to connect to Apache Kafka. Error: ${error.message}`
+    );
   }
 }
 
 function createTopics(config) {
   const admin = config.admin();
   admin.connect();
-  console.log("Application successfully conected to Apache Kafka.");
+  console.info("Application successfully conected to Apache Kafka.");
   admin.createTopics({
     topics: [
       { topic: topics.DC_COMICS_REQUEST_TOPIC },

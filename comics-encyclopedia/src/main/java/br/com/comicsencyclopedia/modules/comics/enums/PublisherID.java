@@ -1,6 +1,14 @@
 package br.com.comicsencyclopedia.modules.comics.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
 public enum PublisherID {
-    DC,
-    MARVEL;
+
+    DC("DC Comics"),
+    MARVEL("Marvel Comics");
+
+    @Getter
+    private final String publisherName;
 }

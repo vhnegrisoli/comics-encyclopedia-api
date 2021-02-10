@@ -1,19 +1,19 @@
 package br.com.comicsencyclopedia.modules.comics.util;
 
 import br.com.comicsencyclopedia.config.exception.ValidacaoException;
-import br.com.comicsencyclopedia.modules.comics.model.Comics;
+import br.com.comicsencyclopedia.modules.processorapi.dto.ComicsProcessorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonUtil {
 
-    public static Comics toComics(String json) {
+    public static ComicsProcessorResponse toComics(String json) {
         try {
             var mapper = new ObjectMapper();
-            return mapper.readValue(json, Comics.class);
+            return mapper.readValue(json, ComicsProcessorResponse.class);
         } catch (Exception ex) {
-            throw new ValidacaoException("Erro ao tentar gerar objeto Comics a partir do JSON em String: "
+            throw new ValidacaoException("Error while trying to convert String json : "
                 .concat(json)
-                .concat(" - erro: ")
+                .concat(" - to Comics object. Error: ")
                 .concat(ex.getMessage()));
         }
     }
@@ -23,9 +23,9 @@ public class JsonUtil {
             var mapper = new ObjectMapper();
             return mapper.writeValueAsString(object);
         } catch (Exception ex) {
-            throw new ValidacaoException("Erro ao tentar gerar JSON String do objeto: "
+            throw new ValidacaoException("Error while trying to convert Java Object: "
                 .concat(object.toString())
-                .concat(" - erro: ")
+                .concat(" - to JSON String. Error: ")
                 .concat(ex.getMessage()));
         }
     }
