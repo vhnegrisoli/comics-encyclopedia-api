@@ -7,7 +7,8 @@ class ComicsRepository {
   }
 
   async findByNameLowerContaining(name) {
-    let comics = await Comics.find({ nameLower: `/${name}/` });
+    console.info(`Trying to search for ${name}`);
+    let comics = await Comics.find({ nameLower: { $regex: `.*${name}.*` } });
     return comics;
   }
 
