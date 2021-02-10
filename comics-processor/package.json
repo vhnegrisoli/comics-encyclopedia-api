@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "kafkajs": "^1.15.0",
@@ -13,6 +12,7 @@
     "sucrase": "^3.17.1"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "startContainer": "set NODE_ENV=container&& nodemon app.js"
   }
 }

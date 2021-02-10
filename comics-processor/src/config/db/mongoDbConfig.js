@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import * as config from "../secrets/secrets";
 
 export function connect() {
+  console.info(`MongoDB Connection: ${config.MONGO_DB_CONNECTION}`)
   mongoose.connect(config.MONGO_DB_CONNECTION, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

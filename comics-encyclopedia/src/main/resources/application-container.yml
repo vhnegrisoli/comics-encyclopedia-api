@@ -13,9 +13,9 @@ app-config:
   services:
     super_hero_api:
       access_token: ${SUPER_HERO_API_ACCESS_TOKEN}
-      base_url: https://superheroapi.com/api/${app-config.api.access_token}/
+      base_url: https://superheroapi.com/api/${app-config.services.super_hero_api.access_token}/
     comics_processing:
       base_url: ${COMICS_PROCESSOR_API}/api/comics/
 
 kafka:
-  bootstrap-server: kafka:9092
+  bootstrap-server: ${KAFKA_SERVER}

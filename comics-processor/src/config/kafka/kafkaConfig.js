@@ -5,6 +5,7 @@ import * as topics from "./topics";
 let kafka = null;
 
 export function connect() {
+  console.info(`Kafka Connection: ${secrets.KAFKA_CONNECTION}`);
   try {
     const config = new Kafka({
       clientId: "comics-encyclopedia",

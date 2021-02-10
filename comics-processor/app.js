@@ -8,9 +8,28 @@ import comics from "./src/modules/comics/routes/comicsRoutes";
 const app = express();
 const env = process.env;
 
-db.connect();
-kafka.connect();
-consumer.consumeMessages();
+console.info(`Actual env profile: ${env.NODE_ENV}`);
+
+waitForKafkaAndMongoDB()
+
+async function waitForKafkaAndMongoDB() {
+  let env = process.env;
+  const TWENTY_SECONDS = 30000;
+  if (env.NODE_ENV === "container") {
+    setInterval(() => {
+      console.info("Waiting for MongoDB and Apache Kafka containers to start...")
+      startApplication()
+    }, TWENTY_SECONDS)
+  } else {
+    startApplication()
+  }
+}
+
+function startApplication() {
+  db.connect();
+  kafka.connect();
+  consumer.consumeMessages();
+}
 
 app.use(comics);
 const PORT = env.PORT || 8081;
