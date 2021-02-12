@@ -8,20 +8,20 @@ import comics from "./src/modules/comics/routes/comicsRoutes";
 const app = express();
 const env = process.env;
 
-console.info(`Actual env profile: ${env.NODE_ENV}`);
+console.info(`Actual env profile: ${env.NODE_ENV || "dev"}`);
 
-waitForKafkaAndMongoDB()
+waitForKafkaAndMongoDB();
 
 async function waitForKafkaAndMongoDB() {
   let env = process.env;
   const TWENTY_SECONDS = 30000;
   if (env.NODE_ENV === "container") {
+    console.info("Waiting for MongoDB and Apache Kafka containers to start...");
     setInterval(() => {
-      console.info("Waiting for MongoDB and Apache Kafka containers to start...")
-      startApplication()
-    }, TWENTY_SECONDS)
+      startApplication();
+    }, TWENTY_SECONDS);
   } else {
-    startApplication()
+    startApplication();
   }
 }
 
