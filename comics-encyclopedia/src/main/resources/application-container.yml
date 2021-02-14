@@ -18,4 +18,14 @@ app-config:
       base_url: ${COMICS_PROCESSOR_API}/api/comics/
 
 kafka:
-  bootstrap-server: ${KAFKA_SERVER}
+  bootstrap-servers: ${KAFKA_SERVER}
+  topic:
+    dc-comics-request: dc_comics_request.topic
+    dc-comics-response: dc_comics_response.topic
+    marvel-comics-request: marvel_comics_request.topic
+    marvel-comics-response: marvel_comics_response.topic
+    not-informed-publisher-request: not_informed_publisher_request.topic
+    not-informed-publisher-response: not_informed_publisher_response.topic
+  consumer:
+    group-id: ${KAFKA_GROUP_ID}
+    auto-offset-reset: earliest

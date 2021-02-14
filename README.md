@@ -39,6 +39,13 @@ This diagram represents how the components works in the system, and the executio
 
 ![Architecture design](https://github.com/vhnegrisoli/comics-encyclopedia-api/blob/main/Comics%20Encyclopedia%20Architecture.png)
 
+## Get your Super Hero API access token
+
+First of all, go to the Super Hero API website: https://superheroapi.com
+
+Then, log in with your Facebook account and get your access token. After that, just replace your
+access token at `docker-compose.yml` file. Change the value of the `SUPER_HERO_API_ACCESS_TOKEN` variable present at `comics-encyclopedia-api` container.  
+
 ## Run application
 
 As we use a docker-compose file, to run everything you just have to type:
@@ -62,12 +69,14 @@ After running the docker-compose file, there will be 6 docker containers, and it
 
 ## Kafka Topics
 
-We'll have 4 topics:
+We'll have 6 topics:
 
 * **dc_comics_request.topic** (for DC Comics data processing)
 * **dc_comics_response.topic** (for DC Comics data response to Comics Encyclopedia API)
 * **marvel_comics_request.topic** (for Marvel Comics data processing)
 * **marvel_comics_response.topic** (for Marvel Comics data response to Comics Encyclopedia API)
+* **not_informed_publisher_request.topic** (for data which has no publisher as DC or Marvel Comics for processing)
+* **not_informed_publisher_response.topic** (for data which has no publisher as DC or Marvel Comics for response)
 
 ## Creating topics manually
 
@@ -89,6 +98,14 @@ Marvel Comics Request:
 Marvel Comics Response:
 
 `docker-compose exec kafka kafka-topics --create --topic marvel_comics_response.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181`
+
+Not Informed Publisher Request:
+
+`docker-compose exec kafka kafka-topics --create --topic not_informed_publisher_request.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181`
+
+Not Informed Publisher Response
+
+`docker-compose exec kafka kafka-topics --create --topic not_informed_publisher_response.topic --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181`
 
 And if you don't want to use CLI, by accessing Kafdrop you can also create or delete topics.
 

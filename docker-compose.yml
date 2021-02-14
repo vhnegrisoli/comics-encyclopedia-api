@@ -6,9 +6,6 @@ services:
     image: confluentinc/cp-zookeeper:latest
     networks: 
       - broker-kafka
-    ports:
-      - '2181:2181'
-      - '2000:2000'
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -21,7 +18,7 @@ services:
     depends_on:
       - zookeeper
     ports:
-      - '9092:9092'
+      - 9092:9092
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -38,7 +35,7 @@ services:
     depends_on:
       - kafka
     ports:
-      - '19000:9000'
+      - 19000:9000
     environment:
       KAFKA_BROKERCONNECT: kafka:29092
 
@@ -51,42 +48,42 @@ services:
     environment:
       - AUTH=no
     ports:
-      - '27017:27017'
-      - '28017:28017'
-  
+      - 27017:27017
+      - 28017:28017
+
   comics-processor-api:
     build: './comics-processor'
     container_name: comics-processor-api
     ports:
-      - '8081:8081'
+      - 8081:8081
     networks:
       - broker-kafka
     depends_on:
       - comics-encyclopedia-db
-      - zookeeper
       - kafka
     environment:
       - MONGO_DB_CONNECTION=mongodb://comics-encyclopedia-db:27017/comics-encyclopedia
       - KAFKA_SERVER=kafka:29092
+      - KAFKA_GROUP_ID=comics_processor_group_container
       - NODE_ENV=container
 
   comics-encyclopedia-api:
     build: './comics-encyclopedia'
     container_name: comics-encyclopedia-api
     ports:
-      - '8080:8080'
+      - 8080:8080
     networks:
       - broker-kafka
     depends_on:
       - comics-encyclopedia-db
-      - zookeeper
       - kafka
     environment:
       - SPRING_PROFILES_ACTIVE=container
       - MONGO_DB_CONNECTION=mongodb://comics-encyclopedia-db:27017/comics-encyclopedia-requests
       - SUPER_HERO_API_ACCESS_TOKEN=2560039007408985
-      - KAFKA_SERVER=kafka:29092
       - COMICS_PROCESSOR_API=http://comics-processor-api:8081
+      - KAFKA_SERVER=kafka:29092
+      - KAFKA_GROUP_ID=comics_encyclopedia_group_container
 
 networks: 
   broker-kafka:

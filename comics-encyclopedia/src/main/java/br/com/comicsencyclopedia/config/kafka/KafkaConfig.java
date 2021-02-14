@@ -2,6 +2,7 @@ package br.com.comicsencyclopedia.config.kafka;
 
 import br.com.comicsencyclopedia.modules.processorapi.consumer.ComicsProcessorApiConsumer;
 import br.com.comicsencyclopedia.modules.processorapi.publisher.ComicsProcessorApiPublisher;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -16,6 +17,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Configuration
 public class KafkaConfig {
 
@@ -24,6 +26,7 @@ public class KafkaConfig {
 
     @Bean
     public Map<String, Object> producerConfigs() {
+        log.info("Default Kafka Producer Bootstrap Server: {}", bootstrapServers);
         var propriedades = new HashMap<String, Object>();
         propriedades.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         propriedades.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -47,7 +50,8 @@ public class KafkaConfig {
     }
 
     @Bean
-    public Map<String, Object> consumerConfigs() {
+    public Map<String, Object> consumerConfigs() {  
+        log.info("Default Kafka Consumer Bootstrap Server: {}", bootstrapServers);
         var propriedades = new HashMap<String, Object>();
         propriedades.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         propriedades.put(ConsumerConfig.GROUP_ID_CONFIG, "comics_encyclopedia_group");

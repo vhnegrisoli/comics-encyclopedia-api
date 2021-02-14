@@ -6,6 +6,7 @@ let kafka = null;
 
 export function connect() {
   console.info(`Kafka Connection: ${secrets.KAFKA_CONNECTION}`);
+  console.info(`Kafka Group ID: ${secrets.KAFKA_GROUP_ID}`);
   try {
     const config = new Kafka({
       clientId: "comics-encyclopedia",
