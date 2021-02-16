@@ -14,8 +14,8 @@ public class ComicsProcessorApiConsumer {
     private ComicsService comicsService;
 
     @KafkaListener(
-        groupId = "${kafka.consumer.group-id}",
-        topics = "${kafka.topic.dc-comics-response}",
+        groupId = "${spring.kafka.consumer.group-id}",
+        topics = "${spring.kafka.topic.dc-comics-response}",
         containerFactory = "kafkaListenerContainerFactory"
     )
     public void consumeDcComicsResponse(String message) {
@@ -30,8 +30,8 @@ public class ComicsProcessorApiConsumer {
     }
 
     @KafkaListener(
-        groupId = "${kafka.consumer.group-id}",
-        topics = "${kafka.topic.marvel-comics-response}",
+        groupId = "${spring.kafka.consumer.group-id}",
+        topics = "${spring.kafka.topic.marvel-comics-response}",
         containerFactory = "kafkaListenerContainerFactory"
     )
     public void consumeMarvelComicsResponse(String message) {
@@ -46,8 +46,8 @@ public class ComicsProcessorApiConsumer {
     }
 
     @KafkaListener(
-        groupId = "${kafka.consumer.group-id}",
-        topics = "${kafka.topic.not-informed-publisher-response}",
+        groupId = "${spring.kafka.consumer.group-id}",
+        topics = "${spring.kafka.topic.not-informed-publisher-response}",
         containerFactory = "kafkaListenerContainerFactory"
     )
     public void consumeNotInformedPublisherResponse(String message) {

@@ -2,11 +2,28 @@ server:
   port: 8080
 
 spring:
+
   data:
     mongodb:
       repositories:
         enabled: true
       uri: ${MONGO_DB_CONNECTION}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER}
+    producer:
+      bootstrap-servers: ${KAFKA_SERVER}
+    topic:
+      dc-comics-request: dc_comics_request.topic
+      dc-comics-response: dc_comics_response.topic
+      marvel-comics-request: marvel_comics_request.topic
+      marvel-comics-response: marvel_comics_response.topic
+      not-informed-publisher-request: not_informed_publisher_request.topic
+      not-informed-publisher-response: not_informed_publisher_response.topic
+    consumer:
+      group-id: ${KAFKA_GROUP_ID}
+      auto-offset-reset: earliest
+      bootstrap-servers: ${KAFKA_SERVER}
 
 app-config:
 
@@ -16,16 +33,3 @@ app-config:
       base_url: https://superheroapi.com/api/${app-config.services.super_hero_api.access_token}/
     comics_processing:
       base_url: ${COMICS_PROCESSOR_API}/api/comics/
-
-kafka:
-  bootstrap-servers: ${KAFKA_SERVER}
-  topic:
-    dc-comics-request: dc_comics_request.topic
-    dc-comics-response: dc_comics_response.topic
-    marvel-comics-request: marvel_comics_request.topic
-    marvel-comics-response: marvel_comics_response.topic
-    not-informed-publisher-request: not_informed_publisher_request.topic
-    not-informed-publisher-response: not_informed_publisher_response.topic
-  consumer:
-    group-id: ${KAFKA_GROUP_ID}
-    auto-offset-reset: earliest

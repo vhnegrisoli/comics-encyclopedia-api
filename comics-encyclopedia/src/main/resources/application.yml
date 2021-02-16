@@ -2,11 +2,28 @@ server:
   port: 8080
 
 spring:
+
   data:
     mongodb:
       repositories:
         enabled: true
       uri: mongodb://localhost:27017/comics-encyclopedia-requests
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      bootstrap-servers: localhost:9092
+    topic:
+      dc-comics-request: dc_comics_request.topic
+      dc-comics-response: dc_comics_response.topic
+      marvel-comics-request: marvel_comics_request.topic
+      marvel-comics-response: marvel_comics_response.topic
+      not-informed-publisher-request: not_informed_publisher_request.topic
+      not-informed-publisher-response: not_informed_publisher_response.topic
+    consumer:
+      group-id: comics_encyclopedia_group
+      auto-offset-reset: earliest
+      bootstrap-servers: localhost:9092
 
 app-config:
 
@@ -19,16 +36,3 @@ app-config:
 
   schedulers:
     delete-data-every-hour: 0 0 */1 * * *
-
-kafka:
-  bootstrap-servers: localhost:9092
-  topic:
-    dc-comics-request: dc_comics_request.topic
-    dc-comics-response: dc_comics_response.topic
-    marvel-comics-request: marvel_comics_request.topic
-    marvel-comics-response: marvel_comics_response.topic
-    not-informed-publisher-request: not_informed_publisher_request.topic
-    not-informed-publisher-response: not_informed_publisher_response.topic
-  consumer:
-    group-id: comics_encyclopedia_group
-    auto-offset-reset: earliest

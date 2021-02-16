@@ -15,13 +15,13 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 @Slf4j
 public class ComicsProcessorApiPublisher {
 
-    @Value("${kafka.topic.dc-comics-request}")
+    @Value("${spring.kafka.topic.dc-comics-request}")
     private String dcComicsRequestTopic;
 
-    @Value("${kafka.topic.marvel-comics-request}")
+    @Value("${spring.kafka.topic.marvel-comics-request}")
     private String marvelComicsRequestTopic;
 
-    @Value("${kafka.topic.not-informed-publisher-request}")
+    @Value("${spring.kafka.topic.not-informed-publisher-request}")
     private String notInformedPublisherRequest;
 
     @Autowired
